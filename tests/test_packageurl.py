@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (c) the purl authors
+# SPDX-License-Identifier: MIT
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +37,6 @@ import unittest
 from packageurl import normalize_qualifiers
 from packageurl import normalize
 from packageurl import PackageURL
-
 
 # Python 2 and 3 support
 try:
@@ -154,6 +154,7 @@ build_tests()
 
 
 class NormalizePurlTest(unittest.TestCase):
+
     def test_normalize_qualifiers_as_string(self):
         qualifiers_as_dict = {
             'classifier': 'sources',
@@ -286,3 +287,39 @@ class NormalizePurlTest(unittest.TestCase):
             ('subpath', u'this/is/a/path')
         ])
         assert expected == purl.to_dict(encode=True)
+
+    def test_to_dict_custom_empty_value(self):
+        purl = PackageURL(
+            type='maven',
+            namespace='',
+            name='commons-logging',
+            version='12.3',
+            qualifiers=None,
+        )
+
+        expected = OrderedDict([
+            ('type', 'maven'),
+            ('namespace', None),
+            ('name', 'commons-logging'),
+            ('version', '12.3'),
+            ('qualifiers', None),
+            ('subpath', None)
+        ])
+        assert expected == purl.to_dict()
+        assert expected == purl.to_dict(empty=None)
+
+        expected = OrderedDict([
+            ('type', 'maven'),
+            ('namespace', ''),
+            ('name', 'commons-logging'),
+            ('version', '12.3'),
+            ('qualifiers', ''),
+            ('subpath', '')
+        ])
+        assert expected == purl.to_dict(empty='')
+
+
+def test_purl_is_hashable():
+    s = {PackageURL(name='hashable', type='pypi')}
+    assert len(s) == 1
+

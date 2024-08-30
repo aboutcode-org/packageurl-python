@@ -349,7 +349,7 @@ def build_github_api_purl(url):
     """
     segments = get_path_segments(url)
 
-    if not(len(segments) >= 3):
+    if not (len(segments) >= 3):
         return
     namespace = segments[1]
     name = segments[2]
@@ -385,9 +385,9 @@ def build_github_purl(url):
     https://github.com/package-url/packageurl-js/tree/master/test/data or
     https://github.com/package-url/packageurl-js/tree/master or
     https://github.com/package-url/packageurl-js or
-    https://github.com/nexB/scancode-toolkit/archive/v3.1.1.zip
+    https://github.com/aboutcode-org/scancode-toolkit/archive/v3.1.1.zip
     """
-    # https://github.com/nexB/scancode-toolkit/archive/v3.1.1.zip
+    # https://github.com/aboutcode-org/scancode-toolkit/archive/v3.1.1.zip
     archive_pattern = (
         r"https?://github.com/(?P<namespace>.+)/(?P<name>.+)"
         r"/archive/v?(?P<version>.+).(zip|tar.gz|tar.bz2|.tgz)"
@@ -404,7 +404,7 @@ def build_github_purl(url):
         r"(?P<namespace>.+)/(?P<name>.+)/blob/(?P<version>[^/]+)/(?P<subpath>.*)$"
     )
 
-    releases_download_pattern= (
+    releases_download_pattern = (
         r"https?://github.com/(?P<namespace>.+)/(?P<name>.+)"
         r"/releases/download/(?P<version>[^/]+)/.*$"
     )
